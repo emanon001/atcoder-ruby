@@ -16,6 +16,8 @@ end
 def comb(n, k, context)
   return 0 if n < k
   return 0 if n < 0 || k < 0
-  fac = context[:fac]; finv = context[:finv]; mod = context[:mod]
+  fac = context[:fac]
+  finv = context[:finv]
+  mod = context[:mod]
   fac[n] * (finv[k] * finv[n - k] % mod) % mod
 end
