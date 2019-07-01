@@ -17,6 +17,10 @@ class PriorityQueue
     end
   end
 
+  def empty?
+    size == 0
+  end
+
   def pop
     return nil if @size <= 0
     max = @heap[1]
