@@ -1,27 +1,14 @@
 N = gets.to_i
 a_list = gets.split.map(&:to_i)
 
-ans = 0
-(0..a_list[0]).each do |n|
-  prev = n
-  is_ok = (1...N).all? do |i|
-    a = a_list[i]
-    b = a - prev
-    prev = b
-    if i == N - 1
-      b == n
-    else
-      b > 0
-    end
-  end
-  if is_ok
-    ans = n
-    break
-  end
+sum = a_list.reduce(&:+)
+x1 = sum
+1.step(by: 2, to: N - 2) do |i|
+  x1 -= a_list[i] * 2
 end
-result = a_list.map do |a|
-  ret = ans * 2
-  ans = a - ans
-  ret
+ans = Array.new(N)
+ans[0] = x1
+(0...(N - 1)).each do |i|
+  ans[i + 1] = a_list[i] * 2 - ans[i]
 end
-puts result.join(' ')
+puts ans.join(' ')
