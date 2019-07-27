@@ -1,0 +1,185 @@
+{
+  "contest": {
+    "id": "tkppc4-1",
+    "title": "技術室奥プログラミングコンテスト#4 Day1",
+    "url": "https://atcoder.jp/contests/tkppc4-1"
+  },
+  "tasks": [
+    {
+      "id": "tkppc4_1_a",
+      "label": "A",
+      "title": "ヘビがヘビー",
+      "url": "https://atcoder.jp/contests/tkppc4-1/tasks/tkppc4_1_a",
+      "directory": {
+        "path": "a",
+        "testdir": "test",
+        "submit": "main.rb"
+      }
+    },
+    {
+      "id": "tkppc4_1_b",
+      "label": "B",
+      "title": "Long Long Ago",
+      "url": "https://atcoder.jp/contests/tkppc4-1/tasks/tkppc4_1_b",
+      "directory": {
+        "path": "b",
+        "testdir": "test",
+        "submit": "main.rb"
+      }
+    },
+    {
+      "id": "tkppc4_1_c",
+      "label": "C",
+      "title": "異世界転生",
+      "url": "https://atcoder.jp/contests/tkppc4-1/tasks/tkppc4_1_c",
+      "directory": {
+        "path": "c",
+        "testdir": "test",
+        "submit": "main.rb"
+      }
+    },
+    {
+      "id": "tkppc4_1_d",
+      "label": "D",
+      "title": "スキップ",
+      "url": "https://atcoder.jp/contests/tkppc4-1/tasks/tkppc4_1_d",
+      "directory": {
+        "path": "d",
+        "testdir": "test",
+        "submit": "main.rb"
+      }
+    },
+    {
+      "id": "tkppc4_1_e",
+      "label": "E",
+      "title": "Osmium_1008と課題",
+      "url": "https://atcoder.jp/contests/tkppc4-1/tasks/tkppc4_1_e",
+      "directory": {
+        "path": "e",
+        "testdir": "test",
+        "submit": "main.rb"
+      }
+    },
+    {
+      "id": "tkppc4_1_f",
+      "label": "F",
+      "title": "不便な橋",
+      "url": "https://atcoder.jp/contests/tkppc4-1/tasks/tkppc4_1_f",
+      "directory": {
+        "path": "f",
+        "testdir": "test",
+        "submit": "main.rb"
+      }
+    },
+    {
+      "id": "tkppc4_1_g",
+      "label": "G",
+      "title": "バラバラ掛け算",
+      "url": "https://atcoder.jp/contests/tkppc4-1/tasks/tkppc4_1_g",
+      "directory": {
+        "path": "g",
+        "testdir": "test",
+        "submit": "main.rb"
+      }
+    },
+    {
+      "id": "tkppc4_1_h",
+      "label": "H",
+      "title": "don't be late",
+      "url": "https://atcoder.jp/contests/tkppc4-1/tasks/tkppc4_1_h",
+      "directory": {
+        "path": "h",
+        "testdir": "test",
+        "submit": "main.rb"
+      }
+    },
+    {
+      "id": "tkppc4_1_i",
+      "label": "I",
+      "title": "school competition 1",
+      "url": "https://atcoder.jp/contests/tkppc4-1/tasks/tkppc4_1_i",
+      "directory": {
+        "path": "i",
+        "testdir": "test",
+        "submit": "main.rb"
+      }
+    },
+    {
+      "id": "tkppc4_1_j",
+      "label": "J",
+      "title": "school competition 2",
+      "url": "https://atcoder.jp/contests/tkppc4-1/tasks/tkppc4_1_j",
+      "directory": {
+        "path": "j",
+        "testdir": "test",
+        "submit": "main.rb"
+      }
+    },
+    {
+      "id": "tkppc4_1_k",
+      "label": "K",
+      "title": "天使と宿題",
+      "url": "https://atcoder.jp/contests/tkppc4-1/tasks/tkppc4_1_k",
+      "directory": {
+        "path": "k",
+        "testdir": "test",
+        "submit": "main.rb"
+      }
+    },
+    {
+      "id": "tkppc4_1_l",
+      "label": "L",
+      "title": "じゃんけん",
+      "url": "https://atcoder.jp/contests/tkppc4-1/tasks/tkppc4_1_l",
+      "directory": {
+        "path": "l",
+        "testdir": "test",
+        "submit": "main.rb"
+      }
+    },
+    {
+      "id": "tkppc4_1_m",
+      "label": "M",
+      "title": "Pakenのうさぎ",
+      "url": "https://atcoder.jp/contests/tkppc4-1/tasks/tkppc4_1_m",
+      "directory": {
+        "path": "m",
+        "testdir": "test",
+        "submit": "main.rb"
+      }
+    },
+    {
+      "id": "tkppc4_1_n",
+      "label": "N",
+      "title": "multiple",
+      "url": "https://atcoder.jp/contests/tkppc4-1/tasks/tkppc4_1_n",
+      "directory": {
+        "path": "n",
+        "testdir": "test",
+        "submit": "main.rb"
+      }
+    },
+    {
+      "id": "tkppc4_1_o",
+      "label": "O",
+      "title": "Height Changer",
+      "url": "https://atcoder.jp/contests/tkppc4-1/tasks/tkppc4_1_o",
+      "directory": {
+        "path": "o",
+        "testdir": "test",
+        "submit": "main.rb"
+      }
+    },
+    {
+      "id": "tkppc4_1_p",
+      "label": "P",
+      "title": "Flip Cards",
+      "url": "https://atcoder.jp/contests/tkppc4-1/tasks/tkppc4_1_p",
+      "directory": {
+        "path": "p",
+        "testdir": "test",
+        "submit": "main.rb"
+      }
+    }
+  ]
+}
