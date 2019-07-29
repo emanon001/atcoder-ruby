@@ -1,5 +1,5 @@
 class PriorityQueue
-  MIN = -(2 << 60)
+  MIN = -(1 << 60)
 
   attr_reader :size
 
