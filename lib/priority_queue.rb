@@ -1,6 +1,4 @@
 class PriorityQueue
-  include Enumerable
-
   MIN = -(2 << 60)
 
   attr_reader :size
@@ -9,12 +7,6 @@ class PriorityQueue
     @size = 0
     @heap = Array.new
     @get_key = block || :itself.to_proc
-  end
-
-  def each
-    (1..@size).each do |i|
-      yield @heap[i]
-    end
   end
 
   def empty?
