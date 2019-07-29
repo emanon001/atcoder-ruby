@@ -39,6 +39,11 @@ class PriorityQueue
     @heap[1]
   end
 
+  def to_a
+    return [] if @size == 0
+    @heap[1..@size]
+  end
+
   private
 
   def max_heapify(i)
