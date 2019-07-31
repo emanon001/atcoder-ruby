@@ -1,66 +1,68 @@
 h, w = gets.not_nil!.split.map(&.to_i)
 board = h.times.map { gets.not_nil!.chomp.chars }.to_a
-horizontal_sum_list = Array(Array(Int32)).new
-board.each_with_index do |row, i|
-  l = r = nil
-  sum_list = Array(Int32).new(w, 0)
-  row.each_with_index do |ch, j|
-    if ch == '#'
-      if l && r
-        count = r - l
-        (l..r).each do |ii|
-          sum_list[ii] = count
-        end
-      end
-      l = r = nil
-    else
-      l = l ? l : j
-      r = r ? r + 1 : j
-      if j == w - 1
-        count = r - l
-        (l..r).each do |jj|
-          sum_list[jj] = count
-        end
-      end
-    end
-  end
-  horizontal_sum_list.push(sum_list)
-end
 
-vertical_sum_list = Array(Array(Int32)).new
-h.times { |i| vertical_sum_list.push(Array(Int32).new(w, 0)) }
-w.times do |j|
-  t = b = nil
-  h.times do |i|
-    ch = board[i][j]
-    if ch == '#'
-      if t && b
-        count = b - t
-        (t..b).each do |ii|
-          vertical_sum_list[ii][j] = count
-        end
-      end
-      t = b = nil
+# horizontal
+left_sum_list = Array.new(h) { Array.new(w, 0) }
+right_sum_list = Array.new(h) { Array.new(w, 0) }
+h.times do |i|
+  left_count = 0
+  right_count = 0
+  w.times do |j|
+    # left
+    cell = board[i][j]
+    left_count = if cell == '#'
+      0
     else
-      t = t ? t : i
-      b = b ? b + 1 : i
-      if i == h - 1
-        count = b - t
-        (t..b).each do |ii|
-          vertical_sum_list[ii][j] = count
-        end
-      end
+      left_count + 1
     end
+    left_sum_list[i][j] = left_count
+    # right
+    j = w - j - 1
+    cell = board[i][j]
+    right_count = if cell == '#'
+      0
+    else
+      right_count + 1
+    end
+    right_sum_list[i][j] = right_count
   end
 end
-
-ans = 0
+# vertical
+top_sum_list = Array.new(w) { Array.new(h, 0) }
+bottom_sum_list = Array.new(w) { Array.new(h, 0) }
+w.times do |i|
+  top_count = 0
+  bottom_count = 0
+  h.times do |j|
+    # top
+    cell = board[j][i]
+    top_count = if cell == '#'
+      0
+    else
+      top_count + 1
+    end
+    top_sum_list[i][j] = top_count
+    # buttom
+    j = h - j - 1
+    cell = board[j][i]
+    bottom_count = if cell == '#'
+      0
+    else
+      bottom_count + 1
+    end
+    bottom_sum_list[i][j] = bottom_count
+  end
+end
+ans = -1
 h.times do |i|
   w.times do |j|
-    if board[i][j] == '.'
-      sum = horizontal_sum_list[i][j] + vertical_sum_list[i][j] + 1
-      ans = sum if sum > ans
-    end
+    cell = board[i][j]
+    next if cell == '#'
+    sum = left_sum_list[i][j] - 1 +
+      right_sum_list[i][j] - 1 +
+      top_sum_list[j][i] - 1 +
+      bottom_sum_list[j][i] - 1 + 1
+    ans = sum if sum > ans
   end
 end
 puts ans
