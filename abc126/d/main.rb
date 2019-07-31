@@ -1,31 +1,28 @@
 N = gets.to_i
 uvw_list = (N - 1).times.map { gets.split.map(&:to_i) }
-g = {}
+graph = Array.new(N) { [] }
 uvw_list.each do |(u, v, w)|
   u -= 1
   v -= 1
-  g[u] ||= []
-  g[u].push([v, w])
-  g[v] ||= []
-  g[v].push([u, w])
+  graph[u].push([v, w])
+  graph[v].push([u, w])
 end
 
-def bfs(g, v, w_table)
-  w_table[v] = 0
-  queue = []
-  queue.push([v, -1])
+def bfs(graph)
+  w_list = Array.new(N)
+  queue = [[0, 0, nil]] # u, w, parent
   while !queue.empty?
-    v, parent = queue.shift
-    w = w_table[v]
-    g[v].each do |(v2, w2)|
-      next if v2 == parent
-      w_table[v2] = w + w2
-      queue.push([v2, v])
+    u, w, parent = queue.shift
+    w_list[u] = w
+    graph[u].each do |(v, w2)|
+      next if v == parent
+      queue.push([v, w + w2, u])
     end
   end
+  w_list
 end
-w_table = {}
-bfs(g, 0, w_table)
-N.times do |i|
-  puts w_table[i] % 2
+
+w_list = bfs(graph)
+w_list.map do |w|
+  puts(w.even? ? '0' : '1')
 end
