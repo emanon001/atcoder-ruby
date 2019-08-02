@@ -4,11 +4,10 @@ is_ok = H.times.all? do |i|
   W.times.all? do |j|
     cell = board[i][j]
     next true if cell == '.'
-    next true if i > 0 && board[i - 1][j] == '#'
-    next true if j < W - 1 && board[i][j + 1] == '#'
-    next true if i < H - 1 && board[i + 1][j] == '#'
-    next true if j > 0 && board[i][j - 1] == '#'
-    false
+    (i > 0 && board[i - 1][j] == '#') ||
+    (j < W - 1 && board[i][j + 1] == '#') ||
+    (i < H - 1 && board[i + 1][j] == '#') ||
+    (j > 0 && board[i][j - 1] == '#')
   end
 end
 puts(is_ok ? 'Yes' : 'No')
