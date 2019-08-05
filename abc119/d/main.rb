@@ -14,21 +14,16 @@ x_list.each do |x|
   end
   s_candidates = []
   t_candidates = []
-  if si && ti
+  if si
     s_candidates.push(s_list[si])
     s_candidates.push(s_list[si - 1]) if si > 0
-    t_candidates.push(t_list[ti])
-    t_candidates.push(t_list[ti - 1]) if ti > 0
-  elsif si
-    s_candidates.push(s_list[si])
-    s_candidates.push(s_list[si - 1]) if si > 0
-    t_candidates.push(t_list[-1])
-  elsif ti
+  else
     s_candidates.push(s_list[-1])
+  end
+  if ti
     t_candidates.push(t_list[ti])
     t_candidates.push(t_list[ti - 1]) if ti > 0
   else
-    s_candidates.push(s_list[-1])
     t_candidates.push(t_list[-1])
   end
   ans = MAX
