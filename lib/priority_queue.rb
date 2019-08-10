@@ -26,7 +26,7 @@ class PriorityQueue
     @size += 1
     i = @size
     @heap[i] = x
-    while i > 1 && @get_key.call(@heap[i / 2]) < @get_key.call(@heap[i])
+    while i > 1 && (@get_key.call(@heap[i / 2]) <=> @get_key.call(@heap[i])) < 0
       t = @heap[i / 2]
       @heap[i / 2] = @heap[i]
       @heap[i] = t
@@ -50,9 +50,9 @@ class PriorityQueue
     l = 2 * i
     r = 2 * i + 1
     largest =
-      l <= @size && @get_key.call(@heap[l]) > @get_key.call(@heap[i]) ? l : i
+      l <= @size && (@get_key.call(@heap[l]) <=> @get_key.call(@heap[i])) > 0 ? l : i
     largest = r \
-      if r <= @size && @get_key.call(@heap[r]) > @get_key.call(@heap[largest])
+      if r <= @size && (@get_key.call(@heap[r]) <=> @get_key.call(@heap[largest])) > 0
     unless largest == i
       t = @heap[i]
       @heap[i] = @heap[largest]
