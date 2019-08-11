@@ -1,21 +1,18 @@
 N = gets.to_i
-digits = N.to_s.size
 
-def dfs(digits_size, digits = [])
-  return [digits] if digits.size == digits_size
-  [7, 5, 3].flat_map do |n|
-    dfs(digits_size, digits + [n])
+def dfs(ns, max_digits)
+  included = ns.reduce([false, false, false]) do |(i7, i5, i3), n|
+    [i7 || n == 7, i5 || n == 5, i3 || n == 3 ]
+  end.all? { |i| i }
+  count = included && ns.join('').to_i <= N ? 1 : 0
+  if ns.size == max_digits
+    count
+  else
+    [7, 5, 3].reduce(count) do |acc, n|
+      acc + dfs(ns + [n], max_digits)
+    end
   end
 end
 
-ans = 0
-(3..digits).each do |d|
-  dfs(d).each do |list|
-    is_ok = list.join('').to_i <= N &&
-      list.count { |n| n == 7 } >= 1 &&
-      list.count { |n| n == 5 } >= 1 &&
-      list.count { |n| n == 3 } >= 1
-    ans += 1 if is_ok
-  end
-end
+ans = dfs([], N.to_s.size)
 puts ans
