@@ -1,30 +1,47 @@
+class Bit
+  def initialize(n)
+    @bit = Array.new(n + 1, 0)
+    @n = n
+  end
+
+  def add(i, x)
+    while i <= @n
+      @bit[i] += x
+      i += i & -i
+    end
+  end
+
+  def sum(i)
+    s = 0
+    while i > 0
+      s += @bit[i]
+      i -= i & -i
+    end
+    s
+  end
+end
+
 N, M, Q = gets.split.map(&:to_i)
 lrs = M.times.map { gets.split.map(&:to_i) }
 pqs = Q.times.map { gets.split.map(&:to_i) }
-count_list = Array.new(N) { Array.new(N){ 0 } }
+list = []
 lrs.each do |(l, r)|
-  l -= 1
-  r -= 1
-  count_list[l][r] += 1
+  list.push([l, r, -1])
 end
-sum_list = Array.new(N) { Array.new(N){ 0 } }
-N.times do |i|
-  sum = 0
-  N.times do |j|
-    sum += count_list[i][j]
-    sum_list[i][j] = sum
+pqs.each.with_index do |(p, q), i|
+  list.push([p, q, i])
+end
+sorted = list.sort_by { |(_, b, c)| [b, c] }
+bit = Bit.new(N)
+ans = Array.new(Q)
+sorted.each do |(a, b, c)|
+  if c == -1
+    bit.add(a, 1)
+  else
+    sum = bit.sum(b) - bit.sum(a - 1)
+    ans[c] = sum
   end
 end
-N.times do |i|
-  sum = 0
-  N.times do |j|
-    sum += sum_list[j][i]
-    sum_list[j][i] = sum
-  end
-end
-pqs.each do |(p, q)|
-  p -= 1
-  q -= 1
-  ans = sum_list[q][q] - (p > 0 ? sum_list[p - 1][q] : 0)
-  puts ans
+ans.each do |sum|
+  puts sum
 end
