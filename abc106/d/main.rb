@@ -8,19 +8,23 @@ lrs.each do |(l, r)|
   count_list[l][r] += 1
 end
 sum_list = Array.new(N) { Array.new(N){ 0 } }
-count_list.each.with_index do |row, i|
+N.times do |i|
   sum = 0
-  row.each.with_index do |c, j|
-    sum += c
+  N.times do |j|
+    sum += count_list[i][j]
     sum_list[i][j] = sum
+  end
+end
+N.times do |i|
+  sum = 0
+  N.times do |j|
+    sum += sum_list[j][i]
+    sum_list[j][i] = sum
   end
 end
 pqs.each do |(p, q)|
   p -= 1
   q -= 1
-  sum = 0
-  (p..q).each do |i|
-    sum += sum_list[i][q] - (i > 0 ? sum_list[i][i - 1] : 0)
-  end
-  puts sum
+  ans = sum_list[q][q] - (p > 0 ? sum_list[p - 1][q] : 0)
+  puts ans
 end
