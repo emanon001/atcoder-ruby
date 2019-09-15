@@ -1,32 +1,32 @@
 require 'set'
 N = gets.to_i
 S = gets.chomp.chars
-# ch_to_idxs = Hash.new
-# S.each.with_index do |ch, i|
-#   ch_to_idxs[ch] = [] unless ch_to_idxs[ch]
-#   ch_to_idxs[ch].push(i)
-# end
 
-ans = 0
-max_span = 1
-S.each.with_index do |ch, i|
-  ((max_span + 1)..(N - i - 1)).each do |span|
-    ((i + span)..(N - 1 - span + 1)).each do |j|
+def ok(s, span)
+  (0..(N - 1 - span)).each do |i|
+    ((i + span)..(N - 1)).each do |j|
       c = 0
-      ok = true
+      ret = true
       while c < span
-        unless S[i + c] == S[j + c]
-          ok = false
+        unless s[i + c] == s[j + c]
+          ret = false
           break
         end
         c += 1
       end
-      if ok
-        max_span = span
-        ans = span
+      if ret
+        return true
       end
     end
-    next if ans == span
   end
+  false
 end
-puts ans
+
+ans = (1..(N - 1)).bsearch do |span|
+  !ok(S, span)
+end
+if ans.nil?
+  puts '0'
+else
+  puts(ans - 1)
+end
