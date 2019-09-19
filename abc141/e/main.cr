@@ -1,9 +1,9 @@
-N = gets.to_i
-S = gets.chomp.chars
+n = gets.not_nil!.to_i
+s = gets.not_nil!.chomp.chars
 
-def zalgo(s, offset)
+def zalgo(s : Array(Char), offset : Int32) : Array(Int32)
   size = s.size - offset
-  ret = Array.new(size)
+  ret = Array(Int32).new(size, 0)
   ret[0] = size
   i = 1
   j = 0
@@ -28,10 +28,11 @@ def zalgo(s, offset)
 end
 
 ans = 0
-(0...N).each do |i|
-  lcp = zalgo(S, i)
+(0...n).each do |i|
+  lcp = zalgo(s, i)
   (1...(lcp.size)).each do |j|
-    c = [lcp[j], j].min
+    c = lcp[j]
+    c = j if j < c
     ans = c if c > ans
   end
 end
