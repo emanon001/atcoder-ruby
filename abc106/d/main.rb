@@ -4,14 +4,18 @@ class Bit
     @n = n
   end
 
+  # 0-origin
   def add(i, x)
+    i += 1
     while i <= @n
       @bit[i] += x
       i += i & -i
     end
   end
 
+  # 0-origin
   def sum(i)
+    i += 1
     s = 0
     while i > 0
       s += @bit[i]
@@ -21,15 +25,16 @@ class Bit
   end
 end
 
+
 N, M, Q = gets.split.map(&:to_i)
 lrs = M.times.map { gets.split.map(&:to_i) }
 pqs = Q.times.map { gets.split.map(&:to_i) }
 list = []
 lrs.each do |(l, r)|
-  list.push([l, r, -1])
+  list.push([l - 1, r - 1, -1])
 end
 pqs.each.with_index do |(p, q), i|
-  list.push([p, q, i])
+  list.push([p - 1, q - 1, i])
 end
 sorted = list.sort_by { |(_, b, c)| [b, c] }
 bit = Bit.new(N)
