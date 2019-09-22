@@ -4,14 +4,18 @@ class Bit
     @n = n
   end
 
+  # 0-origin
   def add(i, x)
+    i += 1
     while i <= @n
       @bit[i] += x
       i += i & -i
     end
   end
 
+  # 0-origin
   def sum(i)
+    i += 1
     s = 0
     while i > 0
       s += @bit[i]
