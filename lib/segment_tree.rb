@@ -1,5 +1,5 @@
 class SegmentTree
-  def initialize(size, default:, update: :itself.to_proc, merge:)
+  def initialize(size, default:, update: -> (nv, _) { nv }, merge:)
     n = 1
     while n < size
       n *= 2
@@ -14,7 +14,7 @@ class SegmentTree
   # 0-origin
   def update(k, a)
     k += @size - 1
-    @data[k] = @update_proc.call(a)
+    @data[k] = @update_proc.call(a, @data[k])
     while k > 0
       k = (k - 1) / 2
       @data[k] = @merge_proc.call(@data[k * 2 + 1], @data[k * 2 + 2])
