@@ -14,6 +14,6 @@ n = two_count
 m = if two_count > 0
   four_count * 2
 else
-  four_count * 2 + 1
+  four_count > 0 ? four_count * 2 + 1 : 0
 end
 puts(n + m >= N ? 'Yes' : 'No')
