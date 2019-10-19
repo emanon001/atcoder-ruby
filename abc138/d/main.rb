@@ -2,31 +2,33 @@ N, Q = gets.split.map(&:to_i)
 edges = (N - 1).times.map { gets.split.map(&:to_i) }
 queries = Q.times.map { gets.split.map(&:to_i) }
 
-graph = Array.new(N) { [] }
+graph = Array.new(N) { Array.new }
 edges.each do |(u, v)|
   u -= 1
   v -= 1
   graph[u].push(v)
   graph[v].push(u)
 end
-table = Array.new(N) { 0 }
-queries.each do |(u, x)|
-  u -= 1
-  table[u] += x
+
+points = Array.new(N, 0)
+queries.each do |u, x|
+  points[u - 1] += x
 end
 
-queue = [[0, nil]]
-while !queue.empty?
-  u, parent = queue.shift
-  n = table[u]
-  graph[u].each do |v|
-    next if v == parent
-    table[v] += n
-    queue.push([v, u])
+def bfs(graph, s, points)
+  ret = Array.new(N, 0)
+  queue = [[s, -1, 0]]
+  while !queue.empty?
+    u, parent, parent_point = queue.shift
+    ret[u] = points[u] + parent_point
+    graph[u].each do |v|
+      next if v == parent
+      queue.push([v, u, ret[u]])
+    end
   end
+  ret
 end
 
-ans = N.times.map do |n|
-  table[n]
-end.join(' ')
+counters = bfs(graph, 0, points)
+ans = counters.join(' ')
 puts ans
