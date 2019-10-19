@@ -11,6 +11,8 @@ abcs.each do |(a, b, c)|
   graph[b].push([a, c])
 end
 
+MEMO = Array.new(N)
+
 def bfs(graph, s, e)
   queue = [[s, -1, 0, L]]
   while !queue.empty?
