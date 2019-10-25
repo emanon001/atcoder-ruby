@@ -4,8 +4,11 @@ K = gets.to_i
 
 set = Set.new
 (0...(S.size)).each do |i|
-  (i...([i + K, S.size].min)).each do |j|
-    set.add(S[i..j].join(''))
+  (0...K).each do |j|
+    next if i + j >= S.size
+    s = S[i..(i + j)].join('')
+    set.add(s)
   end
 end
-puts set.to_a.sort[K - 1]
+ans = set.to_a.sort[K - 1]
+puts ans
