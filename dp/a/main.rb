@@ -1,16 +1,22 @@
 N = gets.to_i
-h_list = gets.split.map(&:to_i)
-INF = 2 << 60
-dp = Array.new(N + 10) { INF }
+hs = gets.split.map(&:to_i)
+
+INF = 1 << 60
+dp = Array.new(N, INF)
 dp[0] = 0
-(N - 1).times do |i|
-  dp[i + 1] = [
-    dp[i + 1],
-    dp[i] + (h_list[i] - h_list[i + 1]).abs
-  ].min
-  dp[i + 2] = [
-    dp[i + 2],
-    dp[i] + (h_list[i] - h_list[i + 2]).abs
-  ].min if i + 2 < N
+
+(0...N).each do |i|
+  n = dp[i]
+  h = hs[i]
+  if i + 1 <= N - 1
+    old_h = dp[i + 1]
+    new_h = n + (h - hs[i + 1]).abs
+    dp[i + 1] = new_h if new_h < old_h
+  end
+  if i + 2 <= N - 1
+    old_h = dp[i + 2]
+    new_h = n + (h - hs[i + 2]).abs
+    dp[i + 2] = new_h if new_h < old_h
+  end
 end
 puts dp[N - 1]
