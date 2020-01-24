@@ -1,20 +1,17 @@
 N, W = gets.split.map(&:to_i)
-wv_list = N.times.map { gets.split.map(&:to_i) }
-dp = Array.new(N + 10)
-dp.size.times do |i|
-  dp[i] = Array.new(W + 10, 0)
-end
-(0...N).each do |i|
-  w, v = wv_list[i]
+wvs = N.times.map { gets.split.map(&:to_i) }
+dp = Array.new(N + 1) { Array.new(W + 1, 0) }
+
+N.times do |i|
+  w, v = wvs[i]
   (0..W).each do |j|
-    dp[i + 1][j] =
-      if j < w
-        dp[i][j]
-      else
-        v1 = dp[i][j]
-        v2 = dp[i][j - w] + v
-        v2 > v1 ? v2 : v1
-      end
+    dp[i + 1][j] = if j < w
+      dp[i][j]
+    else
+      base = dp[i][j - w]
+      current = dp[i][j]
+      base + v > current ? base + v : current
+    end
   end
 end
 puts dp[N][W]
