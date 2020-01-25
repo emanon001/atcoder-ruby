@@ -1,21 +1,22 @@
 N = gets.to_i
-dp = Array.new(N + 10, 1 << 60)
+
+dp = Array.new(N + 10)
 dp[0] = 0
-(0...N).each do |n|
-  dp[n + 1] = dp[n] + 1 if dp[n] + 1 < dp[n + 1]
-  c = 1
-  while n + 6 ** c <= N
-    if dp[n] + 1 < dp[n + 6 ** c]
-      dp[n + 6 ** c] = dp[n] + 1
-    end
-    c += 1
+# 1
+N.times do |i|
+  dp[i + 1] = dp[i] + 1
+end
+N.times do |i|
+  c = dp[i]
+  n = 6
+  while i + n <= N
+    dp[i + n] = c + 1 if c + 1 < dp[i + n]
+    n *= 6
   end
-  c = 1
-  while n + 9 ** c <= N
-    if dp[n] + 1 < dp[n + 9 ** c]
-      dp[n + 9 ** c] = dp[n] + 1
-    end
-    c += 1
+  n = 9
+  while i + n <= N
+    dp[i + n] = c + 1 if c + 1 < dp[i + n]
+    n *= 9
   end
 end
 puts dp[N]
