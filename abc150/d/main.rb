@@ -1,20 +1,28 @@
 N, M = gets.split.map(&:to_i)
-as = gets.split.map(&:to_i)
+A = gets.split.map(&:to_i)
 
-is_ok = as.map do |a|
+def two_count(n)
   ret = 0
-  n = a
   while n % 2 == 0
-    n = n / 2
     ret += 1
+    n /= 2
   end
   ret
-end.uniq.size == 1
+end
 
-if !is_ok
+two_counts = A.map { |a| two_count(a) }
+if two_counts.uniq.size != 1
   puts 0
   exit 0
 end
+first = A.reduce(1) do |acc, a|
+  acc.lcm(a / 2)
+end
 
-lcm = as.map { |a| a / 2 }.reduce { |acc, a| acc.lcm(a) }
-puts (M + lcm) / (lcm * 2)
+rest = M - first
+if rest >= 0
+  ans = 1 + rest / (first * 2)
+  puts ans
+else
+  puts 0
+end
