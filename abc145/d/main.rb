@@ -21,21 +21,25 @@ class ModComb
   end
 end
 
-MOD = 10 ** 9 + 7
 X, Y = gets.split.map(&:to_i)
-max = [X, Y].max
+
+if (X + Y) % 3 != 0
+  puts 0
+  exit 0
+end
+
 diff = (X - Y).abs
-base = max - diff * 2
-if base <= 0
+min = [X, Y].min
+
+if diff > min
   puts 0
   exit 0
 end
-if base % 3 != 0
-  puts 0
-  exit 0
-end
-c = base / 3
-k = c + diff
-n = c * 2 + diff
-comb = ModComb.new(n, MOD)
-puts comb.comb(n, k)
+
+MOD = 10 ** 9 + 7
+count1 = (min - diff) / 3
+count2 = (min - diff) / 3 + diff
+count = count1 + count2
+comb = ModComb.new(count, MOD)
+ans = comb.comb(count, count1)
+puts ans
