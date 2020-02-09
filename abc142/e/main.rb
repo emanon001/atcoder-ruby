@@ -1,40 +1,39 @@
-require 'set'
 N, M = gets.split.map(&:to_i)
-as = Array.new(N)
-keys = Array.new(N) { [] }
-key_to_ts = Array.new(M) { [] }
-ts = Set.new
-M.times do |k|
-  a, _ = gets.split.map(&:to_i)
-  as[k] = a
-  gets.split.map(&:to_i).each do |t|
-    t -= 1
-    keys[t].push(k)
-    key_to_ts[k].push(t)
-    ts.add(t)
+
+def to_bits(c)
+  ret = 0
+  c.each do |n|
+    n -= 1
+    ret += 2 ** n
   end
-end
-if ts.size < N
-  puts -1
-  exit 0
+  ret
 end
 
-def dfs(ts, as, keys, key_to_ts, sum)
-  return sum if ts.empty?
-  min = 1 << 60
-  t = ts[0]
-  keys[t].each do |k|
-    a = as[k]
-    new_sum = sum + a
-    new_ts = ts.dup
-    key_to_ts[k].each do |t2|
-      new_ts.delete(t2)
+AC = M.times.map do
+  a, b = gets.split.map(&:to_i)
+  c = gets.split.map(&:to_i)
+  [a, to_bits(c)]
+end
+
+INF = 1 << 60
+FIN = (1 << N) - 1
+def dfs(state, dp)
+  return dp[state] if dp[state]
+  return dp[state] = 0 if state == FIN
+  ret = INF
+  AC.each do |a, c|
+    if state | c != state
+      cost = dfs(state | c, dp) + a
+      ret = cost if cost < ret
     end
-    n = dfs(new_ts, as, keys, key_to_ts, new_sum)
-    min = n if n < min
   end
-  min
+  dp[state] = ret
 end
 
-ans = dfs((0...N).to_a, as, keys, key_to_ts, 0)
-puts ans
+dp = Array.new(1 << N)
+ans = dfs(0, dp)
+if ans == INF
+  puts -1
+else
+  puts ans
+end
