@@ -1,0 +1,50 @@
+{
+  "contest": {
+    "id": "indeednow-finala-open",
+    "title": "Indeedなう（オープンコンテスト）",
+    "url": "https://atcoder.jp/contests/indeednow-finala-open"
+  },
+  "tasks": [
+    {
+      "id": "indeednow_2015_finala_a",
+      "label": "A",
+      "title": "Table Tennis",
+      "url": "https://atcoder.jp/contests/indeednow-finala-open/tasks/indeednow_2015_finala_a"
+    },
+    {
+      "id": "indeednow_2015_finala_b",
+      "label": "B",
+      "title": "Office Ninja",
+      "url": "https://atcoder.jp/contests/indeednow-finala-open/tasks/indeednow_2015_finala_b"
+    },
+    {
+      "id": "indeednow_2015_finala_c",
+      "label": "C",
+      "title": "Optimal Recommendations",
+      "url": "https://atcoder.jp/contests/indeednow-finala-open/tasks/indeednow_2015_finala_c",
+      "directory": {
+        "path": "c",
+        "testdir": "test",
+        "submit": "main.rb"
+      }
+    },
+    {
+      "id": "indeednow_2015_finala_d",
+      "label": "D",
+      "title": "Longest Path",
+      "url": "https://atcoder.jp/contests/indeednow-finala-open/tasks/indeednow_2015_finala_d"
+    },
+    {
+      "id": "indeednow_2015_finala_e",
+      "label": "E",
+      "title": "Page Rank",
+      "url": "https://atcoder.jp/contests/indeednow-finala-open/tasks/indeednow_2015_finala_e"
+    },
+    {
+      "id": "indeednow_2015_finala_f",
+      "label": "F",
+      "title": "就職活動",
+      "url": "https://atcoder.jp/contests/indeednow-finala-open/tasks/indeednow_2015_finala_f"
+    }
+  ]
+}
