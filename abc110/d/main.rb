@@ -23,11 +23,18 @@ end
 
 require 'prime'
 N, M = gets.split.map(&:to_i)
+
+if M == 1
+  puts 1
+  exit 0
+end
+
 MOD = 10 ** 9 + 7
-es = M.prime_division.map { |(n, e)| e }
-comb = ModComb.new(10 ** 5 + 100, MOD)
+prime_division = M.prime_division
+max_k = prime_division.max_by { |_, e| e }[1]
+comb = ModComb.new(N + max_k, MOD)
 ans = 1
-es.each do |e|
-  ans = ans * comb.comb(N + e - 1, e) % MOD
+prime_division.each do |n, e|
+  ans = (ans * comb.comb(N + e - 1, e)) % MOD
 end
 puts ans
