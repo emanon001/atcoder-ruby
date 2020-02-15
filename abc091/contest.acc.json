@@ -15,7 +15,12 @@
       "id": "abc091_b",
       "label": "B",
       "title": "Two Colors Card Game",
-      "url": "https://atcoder.jp/contests/abc091/tasks/abc091_b"
+      "url": "https://atcoder.jp/contests/abc091/tasks/abc091_b",
+      "directory": {
+        "path": "b",
+        "testdir": "test",
+        "submit": "main.rb"
+      }
     },
     {
       "id": "arc092_a",
