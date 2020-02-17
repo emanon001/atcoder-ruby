@@ -3,9 +3,15 @@ class PriorityQueue
 
   attr_reader :size
 
-  def initialize(&block)
+  def initialize(capacity = nil, &block)
     @size = 0
-    @heap = Array.new
+    @heap = if capacity.nil?
+      Array.new
+    else
+      # capacity には、queue のサイズとしてありえる最大の数を指定する想定。
+      # @heap[1] から使用するため、配列サイズを 1つ余分に確保する。
+      Array.new(capacity + 1)
+    end
     @get_key = block || :itself.to_proc
   end
 
