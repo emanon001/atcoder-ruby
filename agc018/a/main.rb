@@ -1,17 +1,11 @@
 N, K = gets.split.map(&:to_i)
-as = gets.split.map(&:to_i)
-max = as.max
-if max < K
+A = gets.split.map(&:to_i)
+
+max = A.max
+if K > max
   puts 'IMPOSSIBLE'
   exit 0
 end
 
-if as.include?(K)
-  puts 'POSSIBLE'
-  exit 0
-end
-
-n = as.reduce do |acc, a|
-  acc.gcd(a)
-end
-puts(K % n == 0 ? 'POSSIBLE' : 'IMPOSSIBLE')
+gcd = A.reduce { |acc, a| acc.gcd(a) }
+puts(K % gcd == 0 ? 'POSSIBLE' : 'IMPOSSIBLE')
