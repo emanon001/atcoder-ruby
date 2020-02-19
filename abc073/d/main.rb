@@ -3,9 +3,15 @@ class PriorityQueue
 
   attr_reader :size
 
-  def initialize(&block)
+  def initialize(capacity = nil, &block)
     @size = 0
-    @heap = Array.new
+    @heap = if capacity.nil?
+      Array.new
+    else
+      # capacity には、queue のサイズとしてありえる最大の数を指定する想定。
+      # @heap[1] から使用するため、配列サイズを 1つ余分に確保する。
+      Array.new(capacity + 1)
+    end
     @get_key = block || :itself.to_proc
   end
 
@@ -62,12 +68,11 @@ class PriorityQueue
   end
 end
 
-
 N, M, R = gets.split.map(&:to_i)
-rs = gets.split.map { |s| s.to_i - 1 }
-edges = M.times.map { gets.split.map(&:to_i) }
+r_list = gets.split.map { |a| a.to_i - 1}
 graph = Array.new(N) { [] }
-edges.each do |(u, v, c)|
+M.times do
+  u, v, c = gets.split.map(&:to_i)
   u -= 1
   v -= 1
   graph[u].push([v, c])
@@ -77,38 +82,37 @@ end
 def shortest_path(graph, s)
   w_list = Array.new(graph.size, 1 << 60)
   w_list[s] = 0
-  queue = PriorityQueue.new
+  queue = PriorityQueue.new(graph.size) do |_, c|
+    -c
+  end
   queue.push([s, 0])
   while !queue.empty?
-    v, w = queue.pop
-    next if w > w_list[v]
-    graph[v].each do |(u, c)|
-      if w_list[u] > w_list[v] + c
-        w_list[u] = w_list[v] + c
-        queue.push([u, w_list[u]])
+    u, w = queue.pop
+    next if w > w_list[u]
+    graph[u].each do |v, c|
+      if w_list[u] + c < w_list[v]
+        new_cost = w_list[u] + c
+        w_list[v] = new_cost
+        queue.push([v, new_cost])
       end
     end
   end
   w_list
 end
 
-ds = {}
-rs.each do |r|
-  ds[r] = shortest_path(graph, r)
+d = {}
+r_list.map do |r|
+  d[r] = shortest_path(graph, r)
 end
 
-def dfs(rs, u, sum_d, ds)
-  return sum_d if rs.size == 0
-  rs.map do |r|
-    trs = rs.dup
-    trs.delete(r)
-    dfs(trs, r, sum_d + ds[u][r], ds)
-  end.min
+ans = 1 << 60
+r_list.permutation.each do |l|
+  ret = 0
+  u = l[0]
+  l.each do |v|
+    ret += d[u][v]
+    u = v
+  end
+  ans = ret if ret < ans
 end
-
-ans = rs.map do |r|
-  trs = rs.dup
-  trs.delete(r)
-  dfs(trs, r, 0, ds)
-end.min
 puts ans
