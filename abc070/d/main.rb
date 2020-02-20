@@ -15,14 +15,15 @@ end
 
 def distance(graph, s)
   d = Array.new(N)
-  queue = [[s, nil, 0]]
+  d[s] = 0
+  queue = [[s, nil]]
   while !queue.empty?
-    u, parent, distance = queue.shift
+    u, parent = queue.shift
+    distance = d[u]
     graph[u].each do |v, c|
       next if v == parent
-      new_distance = distance + c
-      d[v] = new_distance
-      queue.push([v, u, new_distance])
+      d[v] = distance + c
+      queue.push([v, u])
     end
   end
   d
