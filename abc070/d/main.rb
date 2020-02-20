@@ -1,35 +1,35 @@
 N = gets.to_i
-abcs = (N - 1).times.map { gets.split.map(&:to_i) }
-Q, K = gets.split.map(&:to_i)
-xys = Q.times.map { gets.split.map(&:to_i) }
-
 graph = Array.new(N) { [] }
-abcs.each do |(a, b, c)|
+(N - 1).times do
+  a, b, c = gets.split.map(&:to_i)
   a -= 1
   b -= 1
   graph[a].push([b, c])
   graph[b].push([a, c])
 end
-
-def bfs(s, graph)
-  w_list = Array.new(graph.size, 1 << 60)
-  w_list[s] = 0
-  queue = [[s, 0, -1]]
-  while !queue.empty?
-    v, w, parent = queue.shift
-    w_list[v] = w
-    graph[v].each do |(u, w2)|
-      next if u == parent
-      queue.push([u, w + w2, v])
-    end
-  end
-  w_list
+Q, K = gets.split.map(&:to_i)
+queries = Q.times.map do
+  x, y = gets.split.map(&:to_i)
+  [x - 1, y - 1]
 end
 
-w_list = bfs(K - 1, graph)
-xys.each do |(x, y)|
-  x -= 1
-  y -= 1
-  ans = w_list[x] + w_list[y]
+def distance(graph, s)
+  d = Array.new(N)
+  queue = [[s, nil, 0]]
+  while !queue.empty?
+    u, parent, distance = queue.shift
+    graph[u].each do |v, c|
+      next if v == parent
+      new_distance = distance + c
+      d[v] = new_distance
+      queue.push([v, u, new_distance])
+    end
+  end
+  d
+end
+
+d = distance(graph, K - 1)
+queries.each do |u, v|
+  ans = d[u] + d[v]
   puts ans
 end
