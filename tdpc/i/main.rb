@@ -1,23 +1,27 @@
 S = gets.chomp.chars
+N = S.size
 
-def iwi(s, dp)
-  return dp[s] if dp[s]
-  return dp[s] = 0 if s.size < 3
+def iwi(l, r, dp)
+  return dp[l][r] if dp[l][r]
+  return dp[l][r] = 0 if r - l <= 2
   ret = 0
-  (0..(s.size - 3)).each do |i|
-    a = s[i]
-    b = s[i + 1]
-    c = s[i + 2]
-    if a == 'i' && b == 'w' && c == 'i'
-      new_s = s.take(i) + s.drop(i + 3)
-      r = iwi(new_s, dp) + 1
-      ret = r if r > ret
-    end
-    a = b
-    b = c
+  ((l + 1)...r).each do |m|
+    a = iwi(l, m, dp) + iwi(m, r, dp)
+    ret = a if a > ret
   end
-  dp[s] = ret
+  if S[l] == 'i' && S[r - 1] == 'i'
+    ((l + 1)...r).each do |m|
+      next if S[m] != 'w'
+      a = iwi(l + 1, m, dp)
+      b = iwi(m + 1, r - 1, dp)
+      if a == m - l - 1 && b == r - m - 2
+        ret = r - l
+        break
+      end
+    end
+  end
+  dp[l][r] = ret
 end
-dp = {}
-iwi(S, dp)
-puts dp[S]
+dp = Array.new(N + 1) { Array.new(N + 1) }
+ans = iwi(0, N, dp) / 3
+puts ans
