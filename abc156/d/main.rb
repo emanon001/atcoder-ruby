@@ -1,28 +1,71 @@
-def mod_pow(a, n, mod)
-  ret = 1
-  while n > 0
-    if n[0] == 1
-      ret = ret * a % mod
+class ModInt
+  MOD = 10 ** 9 + 7
+
+  attr_reader :n
+
+  def initialize(n)
+    @n = n % MOD
+  end
+
+  def +(other)
+    if other.is_a?(ModInt)
+      ModInt.new(@n + other.n)
+    else
+      ModInt.new(@n + other)
     end
-    a = a * a % mod
-    n = n >> 1
+  end
+
+  def -(other)
+    if other.is_a?(ModInt)
+      ModInt.new(@n - other.n)
+    else
+      ModInt.new(@n - other)
+    end
+  end
+
+  def *(other)
+    if other.is_a?(ModInt)
+      ModInt.new(@n * other.n)
+    else
+      ModInt.new(@n * other)
+    end
+  end
+
+  def pow(t)
+    return ModInt.new(1) if t == 0
+    a = pow(t >> 1)
+    a = a * a
+    if t[0] == 1
+      a = a * self
+    end
+    a
+  end
+
+  def inv
+    pow(MOD - 2)
+  end
+
+  def /(other)
+    if other.is_a?(ModInt)
+      self * other.inv
+    else
+      self * ModInt.new(other).inv
+    end
+  end
+end
+
+N, A, B = gets.split.map(&:to_i)
+
+def factorial(n, m)
+  ret = ModInt.new(1)
+  n.downto(m).each do |a|
+    ret = ret * a
   end
   ret
 end
 
-def factorial(n, m, mod)
-  r = 1
-  n.downto(m).each do |a|
-    r = (r * a) % mod
-  end
-  r
-end
-
-N, A, B = gets.split.map(&:to_i)
-MOD = 10 ** 9 + 7
-all = mod_pow(2, N, MOD) - 1
+all = ModInt.new(2).pow(N) - 1
 ans = all
-a = factorial(N, N - A + 1, MOD)
-b = factorial(N, N - B + 1, MOD)
-ans = (ans - a - b)
-puts ans
+ans = ans - (factorial(N, N - A + 1) / factorial(A, 1))
+ans = ans - (factorial(N, N - B + 1) / factorial(B, 1))
+puts ans.n
