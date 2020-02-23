@@ -8,27 +8,18 @@ class ModInt
   end
 
   def +(other)
-    if other.is_a?(ModInt)
-      ModInt.new(@n + other.n)
-    else
-      ModInt.new(@n + other)
-    end
+    m = other.is_a?(ModInt) ? other.n : other
+    ModInt.new(@n + m)
   end
 
   def -(other)
-    if other.is_a?(ModInt)
-      ModInt.new(@n - other.n)
-    else
-      ModInt.new(@n - other)
-    end
+    m = other.is_a?(ModInt) ? other.n : other
+    ModInt.new(@n - m)
   end
 
   def *(other)
-    if other.is_a?(ModInt)
-      ModInt.new(@n * other.n)
-    else
-      ModInt.new(@n * other)
-    end
+    m = other.is_a?(ModInt) ? other.n : other
+    ModInt.new(@n * m)
   end
 
   def pow(t)
@@ -46,11 +37,16 @@ class ModInt
   end
 
   def /(other)
-    if other.is_a?(ModInt)
-      self * other.inv
-    else
-      self * ModInt.new(other).inv
-    end
+    oinv = other.is_a?(ModInt) ? other.inv : ModInt.new(other).inv
+    self * oinv
+  end
+
+  def to_s
+    inspect
+  end
+
+  def inspect
+    "mi:#{@n}"
   end
 end
 
