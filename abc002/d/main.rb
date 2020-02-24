@@ -10,23 +10,17 @@ XY.each do |x, y|
   relations[y].add(x)
 end
 
-MAX = (1 << N) - 1
 ans = 0
-(0..MAX).each do |group|
-  members = Set.new
-  N.times do |i|
-    if group[i] == 1
-      members.add(i)
-    end
-  end
+(1...(1 << N)).each do |state|
+  members = N.times.select { |i| state[i] == 1 }
   is_ok = members.all? do |m|
-    relation = relations[m]
     members.all? do |m2|
-      m == m2 || relation.include?(m2)
+      m == m2 || relations[m].include?(m2)
     end
   end
   if is_ok
-    ans = members.size if members.size > ans
+    c = members.size
+    ans = c if c > ans
   end
 end
 puts ans
