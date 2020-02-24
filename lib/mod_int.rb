@@ -8,18 +8,18 @@ class ModInt
   end
 
   def +(other)
-    m = other.is_a?(ModInt) ? other.n : other
-    ModInt.new(@n + m)
+    on = other.is_a?(ModInt) ? other.n : other
+    ModInt.new(@n + on)
   end
 
   def -(other)
-    m = other.is_a?(ModInt) ? other.n : other
-    ModInt.new(@n - m)
+    on = other.is_a?(ModInt) ? other.n : other
+    ModInt.new(@n - on)
   end
 
   def *(other)
-    m = other.is_a?(ModInt) ? other.n : other
-    ModInt.new(@n * m)
+    on = other.is_a?(ModInt) ? other.n : other
+    ModInt.new(@n * on)
   end
 
   def pow(t)
