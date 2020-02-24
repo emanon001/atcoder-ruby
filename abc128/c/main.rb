@@ -1,17 +1,16 @@
 N, M = gets.split.map(&:to_i)
-ks_list = M.times.map { gets.split.map(&:to_i) }
-p_list = gets.split.map(&:to_i)
+require 'set'
+KS = M.times.map { Set.new(gets.split.drop(1).map(&:to_i)) }
+P = gets.split.map(&:to_i)
 
 ans = 0
-(0...(1 << N)).each do |n|
-  is_ok = M.times.all? do |i|
-    k, *s_list = ks_list[i]
-    on_count = 0
-    s_list.each do |s|
-      s -= 1
-      on_count += 1 if n[s] == 1
+(0...(1 << N)).each do |state|
+  is_ok = M.times.all? do |k|
+    set = KS[k]
+    c = (1..N).count do |s|
+      state[s - 1] == 1 && set.include?(s)
     end
-    on_count % 2 == p_list[i]
+    c % 2 == P[k]
   end
   ans += 1 if is_ok
 end
