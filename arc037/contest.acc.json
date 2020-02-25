@@ -26,7 +26,12 @@
       "id": "arc037_c",
       "label": "C",
       "title": "億マス計算",
-      "url": "https://atcoder.jp/contests/arc037/tasks/arc037_c"
+      "url": "https://atcoder.jp/contests/arc037/tasks/arc037_c",
+      "directory": {
+        "path": "c",
+        "testdir": "test",
+        "submit": "main.rb"
+      }
     },
     {
       "id": "arc037_d",
