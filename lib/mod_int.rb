@@ -42,7 +42,7 @@ class ModInt
   end
 
   def to_s
-    inspect
+    @n.to_s
   end
 
   def inspect
