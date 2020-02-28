@@ -1,28 +1,27 @@
 R, C = gets.split.map(&:to_i)
-START = gets.split.map { |s| s.to_i - 1 }
-GOAL = gets.split.map { |s| s.to_i - 1 }
-BOARD = R.times.map { gets.chomp.chars }
+sy, sx = gets.split.map { |n| n.to_i - 1 }
+gy, gx = gets.split.map { |n| n.to_i - 1 }
+board = R.times.map { gets.chomp.chars }
 
-def minimum_step
-  visited = Array.new(R) { Array.new(C, false) }
-  dx = [0, 1, 0, -1]
-  dy = [-1, 0, 1, 0]
-  queue = [[START, 0]]
-  while !queue.empty?
-    (y, x), step = queue.shift
-    4.times do |d|
-      y2 = y + dy[d]
-      x2 = x + dx[d]
-      next if y2 < 0 || y2 >= R || x2 < 0 || x2 >= C
-      next if visited[y2][x2]
-      new_step = step + 1
-      return new_step if [y2, x2] == GOAL
-      cell = BOARD[y2][x2]
-      next if cell == '#'
-      visited[y2][x2] = true
-      queue.push([[y2, x2], new_step])
+dy = [-1, 0, 1, 0]
+dx = [0, 1, 0, -1]
+visited = Array.new(R) { Array.new(C, false) }
+visited[sy][sx] = true
+queue = [[sy, sx, 0]]
+while !queue.empty?
+  i, j, c = queue.shift
+  4.times do |d|
+    y = i + dy[d]
+    x = j + dx[d]
+    next if y < 0 || y >= R || x < 0 || x >= C
+    next if board[y][x] == '#'
+    next if visited[y][x]
+    visited[y][x] = true
+    new_c = c + 1
+    if y == gy && x == gx
+      puts new_c
+      exit 0
     end
+    queue.push([y, x, new_c])
   end
 end
-
-puts minimum_step
