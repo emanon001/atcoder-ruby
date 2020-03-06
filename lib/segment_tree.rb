@@ -1,5 +1,5 @@
 class SegmentTree
-  def initialize(size, default:, update: -> (nv, _) { nv }, merge:)
+  def initialize(size, default:, value: nil, update: -> (nv, _) { nv }, merge:)
     n = 1
     while n < size
       n *= 2
@@ -9,6 +9,7 @@ class SegmentTree
     @update_proc = update
     @merge_proc = merge
     @data = Array.new(n * 2 - 1, default)
+    init_by_value(value) if value
   end
 
   # 0-origin
@@ -36,5 +37,14 @@ class SegmentTree
     vl = execute_query(a, b, k * 2 + 1, l, (l + r) / 2)
     vr = execute_query(a, b, k * 2 + 2, (l + r) / 2, r)
     @merge_proc.call(vl, vr)
+  end
+
+  def init_by_value(value)
+    value.each.with_index do |v, i|
+      @data[i + @size - 1] = v
+    end
+    (@size - 2).downto(0) do |i|
+      @data[i] = @merge_proc.call(@data[i * 2 + 1], @data[i * 2 + 2])
+    end
   end
 end
