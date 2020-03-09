@@ -1,5 +1,5 @@
 class SegmentTree
-  def initialize(size, default:, value: nil, update: -> (nv, _) { nv }, merge:)
+  def initialize(size, default:, value: nil, update: -> (nv, _) { nv }, &merge)
     n = 1
     while n < size
       n *= 2
