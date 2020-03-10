@@ -6,7 +6,7 @@ using namespace std;
 int N;
 long long K;
 
-bool ok(long long n, long long k, vector<long long> a, vector<long long> b)
+bool is_ok(long long n, long long k, vector<long long> a, vector<long long> b)
 {
   long c = 0;
   for (int i = 0; i < N; ++i) {
@@ -33,17 +33,15 @@ int main() {
   }
   sort(b.begin(), b.end());
 
-  long long res = 1000000000000000000 + 1;
-  long long l = 0;
-  long long r = 1000000000000000000 + 1;
-  while (l < r) {
-    long long mid = (l + r) / 2;
-    if (ok(mid, K, a, b)) {
-      r = mid;
-      if (mid < res) res = mid;
+  long long ng = 0;
+  long long ok = 1000000000000000000 + 1;
+  while (abs(ng - ok) > 1) {
+    long long mid = (ng + ok) / 2;
+    if (is_ok(mid, K, a, b)) {
+      ok = mid;
     } else {
-      l = mid + 1;
+      ng = mid;
     }
   }
-  cout << res - 1 << endl;
+  cout << ok - 1 << endl;
 }
