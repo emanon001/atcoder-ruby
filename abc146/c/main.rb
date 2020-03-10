@@ -20,4 +20,4 @@ ok = 0
 res = bsearch(ng: ng, ok: ok) do |n|
   A * n + B * d(n) <= X
 end
-puts [res, ng - 1].min
+puts res

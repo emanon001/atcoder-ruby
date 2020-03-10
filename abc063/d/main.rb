@@ -1,6 +1,18 @@
 N, A, B = gets.split.map(&:to_i)
 H = N.times.map { gets.to_i }
 
+def bsearch(ng:, ok:, &is_ok)
+  while (ok - ng).abs > 1
+    mid = (ok + ng) / 2
+    if is_ok.call(mid)
+      ok = mid
+    else
+      ng = mid
+    end
+  end
+  ok
+end
+
 def ok?(count)
   b_damage = B * count
   diff = A - B
@@ -17,16 +29,7 @@ def ok?(count)
   true
 end
 
-left = 1
-right = H.max
-ans = 1 << 60
-while left <= right
-  mid = (left + right) / 2
-  if ok?(mid)
-    right = mid - 1
-    ans = mid if mid < ans
-  else
-    left = mid + 1
-  end
-end
-puts ans
+ng = 0
+ok = H.max
+res = bsearch(ng: ng, ok: ok) { |n| ok?(n) }
+puts res
