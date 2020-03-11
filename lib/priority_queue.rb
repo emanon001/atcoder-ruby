@@ -1,6 +1,4 @@
 class PriorityQueue
-  MIN = -(1 << 60)
-
   attr_reader :size
 
   def initialize(capacity = nil, &block)
