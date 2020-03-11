@@ -5,65 +5,53 @@ class PriorityQueue
 
   def initialize(capacity = nil, &block)
     @size = 0
-    @heap = if capacity.nil?
-      Array.new
-    else
-      # capacity には、queue のサイズとしてありえる最大の数を指定する想定。
-      # @heap[1] から使用するため、配列サイズを 1つ余分に確保する。
-      Array.new(capacity + 1)
-    end
-    @get_key = block || :itself.to_proc
+    @heap = capacity.nil? ? Array.new : Array.new(capacity)
+    @key = block || :itself.to_proc
   end
 
   def empty?
     size == 0
   end
 
-  def pop
-    return nil if @size <= 0
-    max = @heap[1]
-    @heap[1] = @heap[@size]
-    @size -= 1
-    max_heapify(1)
-    max
+  def push(x)
+    i = @size
+    @size += 1
+    while i > 0
+      parent = (i - 1) / 2
+      break if (@key.call(@heap[parent]) <=> @key.call(x)) >= 0
+      @heap[i] = @heap[parent]
+      i = parent
+    end
+    @heap[i] = x
+    nil
   end
 
-  def push(x)
-    @size += 1
-    i = @size
-    @heap[i] = x
-    while i > 1 && (@get_key.call(@heap[i / 2]) <=> @get_key.call(@heap[i])) < 0
-      t = @heap[i / 2]
-      @heap[i / 2] = @heap[i]
-      @heap[i] = t
-      i = i / 2
+  def pop
+    return nil if @size <= 0
+    ret = @heap[0]
+    x = @heap[@size - 1]
+    @size -= 1
+    i = 0
+    while i * 2 + 1 < @size
+      l = i * 2 + 1
+      r = i * 2 + 2
+      largest = l
+      largest = r \
+        if r < @size && (@key.call(@heap[r]) <=> @key.call(@heap[largest])) > 0
+      break if (@key.call(x) <=> @key.call(@heap[largest])) >= 0
+      @heap[i] = @heap[largest]
+      i = largest
     end
+    @heap[i] = x
+    ret
   end
 
   def top
     return nil if @size <= 0
-    @heap[1]
+    @heap[0]
   end
 
   def to_a
-    return [] if @size == 0
-    @heap[1..@size]
-  end
-
-  private
-
-  def max_heapify(i)
-    l = 2 * i
-    r = 2 * i + 1
-    largest =
-      l <= @size && (@get_key.call(@heap[l]) <=> @get_key.call(@heap[i])) > 0 ? l : i
-    largest = r \
-      if r <= @size && (@get_key.call(@heap[r]) <=> @get_key.call(@heap[largest])) > 0
-    unless largest == i
-      t = @heap[i]
-      @heap[i] = @heap[largest]
-      @heap[largest] = t
-      max_heapify(largest)
-    end
+    @heap.take(@size)
   end
 end
