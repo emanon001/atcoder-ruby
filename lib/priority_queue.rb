@@ -16,9 +16,10 @@ class PriorityQueue
   def push(x)
     i = @size
     @size += 1
+    x_key = @key.call(x)
     while i > 0
       parent = (i - 1) / 2
-      break if (@key.call(@heap[parent]) <=> @key.call(x)) >= 0
+      break if (@key.call(@heap[parent]) <=> x_key) >= 0
       @heap[i] = @heap[parent]
       i = parent
     end
@@ -30,15 +31,22 @@ class PriorityQueue
     return nil if @size <= 0
     ret = @heap[0]
     x = @heap[@size - 1]
+    x_key = @key.call(x)
     @size -= 1
     i = 0
     while i * 2 + 1 < @size
       l = i * 2 + 1
       r = i * 2 + 2
       largest = l
-      largest = r \
-        if r < @size && (@key.call(@heap[r]) <=> @key.call(@heap[largest])) > 0
-      break if (@key.call(x) <=> @key.call(@heap[largest])) >= 0
+      largest_key = @key.call(@heap[l])
+      if r < @size
+        r_key = @key.call(@heap[r])
+        if (r_key <=> largest_key) > 0
+          largest = r
+          largest_key = r_key 
+        end
+      end
+      break if (x_key <=> largest_key) >= 0
       @heap[i] = @heap[largest]
       i = largest
     end
