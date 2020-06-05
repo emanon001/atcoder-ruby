@@ -1,2 +1,5 @@
 main
 main.dwarf
+
+/past*/
+!/past*-open/
