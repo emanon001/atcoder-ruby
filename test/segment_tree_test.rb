@@ -6,8 +6,9 @@ class SegmentTreeTest < Test::Unit::TestCase
     st = SegmentTree.new(
       3,
       default: -1,
-      merge: -> (a, b) { [a, b].max }
-    )
+    ) do |a, b|
+      [a, b].max
+    end
     st.update(0, 1)
     st.update(1, 3)
     st.update(2, 2)
